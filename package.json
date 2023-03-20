@@ -1,6 +1,6 @@
 {
   "name": "asygen",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "0-Deps, simple and fast async generator library for browser and NodeJS",
   "type": "module",
   "main": "build/index.cjs",
