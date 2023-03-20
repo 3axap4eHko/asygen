@@ -17,7 +17,7 @@
     "test:build": "node src/__tests__/index.cjs && node src/__tests__/index.mjs"
   },
   "engines": {
-    "node": ">=15"
+    "node": ">=16"
   },
   "repository": {
     "type": "git",

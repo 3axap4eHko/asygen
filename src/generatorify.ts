@@ -1,11 +1,6 @@
-import { defer } from './defer';
+import { defer, Deferred } from './defer';
 
-interface GeneratorState<T> {
-  value: T;
-  done: boolean
-}
-
-interface TaskCallback<T> {
+export interface TaskCallback<T> {
   (value: T): Promise<T>;
 }
 
@@ -14,14 +9,16 @@ export interface Task<T, R = unknown> {
 }
 
 export const generatorify = <T, R = unknown>(task: Task<T, R>): AsyncIterable<T> => {
-  const dPoll = [defer<GeneratorState<T>>()];
+  const dPoll: Deferred<IteratorResult<T, R>>[] = [defer<IteratorYieldResult<T>>()];
 
   Promise.resolve(task(value => {
-    const next = defer<GeneratorState<T>>();
+    const next = defer<IteratorYieldResult<T>>();
     const prev = dPoll.push(next) - 2;
-    dPoll[prev].resolve({ value, done: false });
-    return dPoll[prev].promise.then(v => v.value);
+    const prevDeferred = dPoll[prev] as Deferred<IteratorYieldResult<T>>;
+    prevDeferred.resolve({ value, done: false });
+    return prevDeferred.promise.then(v => v.value);
   })).then(async (value) => {
+    dPoll[dPoll.length - 1].resolve({ value, done: true });
     await Promise.all(dPoll.map(d => d.promise));
     return { value, done: true };
   });
@@ -31,8 +28,8 @@ export const generatorify = <T, R = unknown>(task: Task<T, R>): AsyncIterable<T>
       return {
         next() {
           const current = dPoll[0];
-          current?.promise?.then(() => dPoll.shift());
-          return current?.promise;
+          current.promise.then(() => dPoll.shift());
+          return current.promise;
         },
       };
     }

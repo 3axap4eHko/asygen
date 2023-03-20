@@ -5,10 +5,21 @@ import Fs from 'node:fs/promises';
 import glob from 'glob';
 import swc from '@swc/core';
 
-const setExtension = (node, extenstion) => {
-  node.source.value = `${node.source.value}.${extenstion}`;
-  node.source.raw = JSON.stringify(node.source.value);
+const exportImportNodes = ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration'];
+
+const isFileExportImport = (node) => {
+  return exportImportNodes.includes(node.type) && /^[.\\\/]/.test(node.source.value);
 };
+
+const forceExtension = (module, extenstion) => {
+  for(const node of module.body) {
+    if (isFileExportImport(node)) {
+      node.source.value = `${node.source.value}.${extenstion}`;
+      node.source.raw = JSON.stringify(node.source.value);
+    }
+  }
+  return module;
+}
 
 const cjsConfig = {
   module: {
@@ -22,14 +33,7 @@ const cjsConfig = {
   },
   sourceMaps: true,
   plugin: (module) => {
-    for(const node of module.body) {
-      if (node.type === 'ImportDeclaration' && /^[.\\\/]/.test(node.source.value)) {
-        setExtension(node, 'cjs');
-      }
-      if (node.type === 'ExportNamedDeclaration' && /^[.\\\/]/.test(node.source.value)) {
-        setExtension(node, 'cjs');
-      }
-    }
+    forceExtension(module, 'cjs');
     return module;
   },
 };
@@ -46,14 +50,7 @@ const mjsConfig = {
   },
   sourceMaps: true,
   plugin: (module) => {
-    for(const node of module.body) {
-      if (node.type === 'ImportDeclaration' && /^[.\\\/]/.test(node.source.value)) {
-        setExtension(node, 'js');
-      }
-      if (node.type === 'ExportNamedDeclaration' && /^[.\\\/]/.test(node.source.value)) {
-        setExtension(node, 'js');
-      }
-    }
+    forceExtension(module, 'js');
     return module;
   },
 };

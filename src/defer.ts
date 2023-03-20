@@ -1,4 +1,4 @@
-export enum State {
+export enum Status {
   PENDING = 'pending',
   RESOLVED = 'resolved',
   REJECTED = 'rejected',
@@ -19,45 +19,42 @@ export class Deferred<T = void, E = unknown> {
   private _promise: Promise<T>;
   private _resolve?: (value: T) => void;
   private _reject?: (error: E) => void;
-  private _state: State = State.PENDING;
+  private _status: Status = Status.PENDING;
 
   constructor() {
     this._promise = new Promise<T>((resolve, reject) => {
-      this._resolve = (value: T) => {
-        this._state = State.RESOLVED;
-        resolve(value);
-      };
-      this._reject = (error: unknown) => {
-        this._state = State.REJECTED;
-        reject(error)
-      };
+      this._resolve = resolve;
+      this._reject = reject;
     });
     this.resolve = this.resolve.bind(this);
     this.reject = this.reject.bind(this);
   }
 
   get [Symbol.toStringTag]() {
-    return `Deffer ${this.txts} ${this._state}`;
+    return `Deferred ${this.txts} ${this._status}`;
   }
 
   get promise() {
     return this._promise;
   }
 
-  get state() {
-    return this._state;
+  get status() {
+    return this._status;
   }
 
   resolve(value: T) {
-    if (this._state === State.PENDING) {
-      this._resolve && this._resolve(value);
+    if (this._status === Status.PENDING) {
+      this._status = Status.RESOLVED;
+      this._resolve(value);
     }
+
     return this;
   }
 
   reject(error: E) {
-    if (this._state === State.PENDING) {
-      this._reject && this._reject(error);
+    if (this._status === Status.PENDING) {
+      this._status = Status.REJECTED;
+      this._reject(error);
     }
     return this;
   }
