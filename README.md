@@ -56,7 +56,7 @@ Copyright (c) 2023-present Ivan Zakharchanka
 [github-url]: https://github.com/3axap4eHko/asygen/actions/workflows/cicd.yml
 [github-image]: https://github.com/3axap4eHko/asygen/actions/workflows/cicd.yml/badge.svg
 [codecov-url]: https://codecov.io/gh/3axap4eHko/asygen
-[codecov-image]: https://codecov.io/gh/3axap4eHko/asygen/branch/master/graph/badge.svg?token=JZ8QCGH6PI
+[codecov-image]: https://codecov.io/gh/3axap4eHko/asygen/branch/master/graph/badge.svg?token=ZKYSDY7GQ0
 [codeclimate-url]: https://codeclimate.com/github/3axap4eHko/asygen/maintainability
 [codeclimate-image]: https://api.codeclimate.com/v1/badges/0f24a357154bada2a37f/maintainability
 [snyk-url]: https://snyk.io/test/npm/asygen/latest
