@@ -2,20 +2,48 @@
 
 import Path from 'node:path';
 import Fs from 'node:fs/promises';
-import glob from 'glob';
+import glob from 'fast-glob';
 import swc from '@swc/core';
 
-const exportImportNodes = ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration'];
+const exportImportNodes = [
+  'ExportAllDeclaration',
+  'ExportDeclaration',
+  'ExportDefaultDeclaration',
+  'ExportDefaultExpression',
+  'ExportDefaultSpecifier',
+  'ExportNamedDeclaration',
+  'ExportNamespaceSpecifier',
+  'ExportSpecifier',
+  'ImportDeclaration',
+  'ImportDefaultSpecifier',
+  'ImportNamespaceSpecifier',
+  'ImportSpecifier',
+];
+
+const isLocalFile = /^\.{0,2}\//;
 
 const isFileExportImport = (node) => {
-  return exportImportNodes.includes(node.type) && /^[.\\\/]/.test(node.source.value);
+  return exportImportNodes.includes(node.type)
+    && (node.source?.type === 'StringLiteral' && isLocalFile.test(node.source.value))
+    || (node.expression?.type === 'StringLiteral' && isLocalFile.test(node.expression.value));
+};
+
+const setNodeExtension = (node, extenstion) => {
+  node.value = `${node.value}.${extenstion}`;
+  node.raw = JSON.stringify(node.value);
 };
 
 const forceExtension = (module, extenstion) => {
-  for(const node of module.body) {
+  for (const node of module.body) {
     if (isFileExportImport(node)) {
-      node.source.value = `${node.source.value}.${extenstion}`;
-      node.source.raw = JSON.stringify(node.source.value);
+      switch (true) {
+        case !!node.source: {
+          setNodeExtension(node.source, extenstion);
+        }; break;
+        case !!node.expression: {
+          setNodeExtension(node.expression, extenstion);
+        }; break;
+      }
     }
   }
   return module;
@@ -23,15 +51,15 @@ const forceExtension = (module, extenstion) => {
 
 const cjsConfig = {
   module: {
-    type: 'commonjs'
+    type: 'commonjs',
+    strict: true,
   },
   jsc: {
     target: 'es5',
     parser: {
-      syntax: 'typescript'
-    }
+      syntax: 'typescript',
+    },
   },
-  sourceMaps: true,
   plugin: (module) => {
     forceExtension(module, 'cjs');
     return module;
@@ -40,15 +68,15 @@ const cjsConfig = {
 
 const mjsConfig = {
   module: {
-    type: 'es6'
+    type: 'es6',
+    strict: true,
   },
   jsc: {
     target: 'es2022',
     parser: {
-      syntax: 'typescript'
-    }
+      syntax: 'typescript',
+    },
   },
-  sourceMaps: true,
   plugin: (module) => {
     forceExtension(module, 'js');
     return module;
@@ -61,6 +89,7 @@ const compile = async (sourceFile, destinationFile, config) => {
     ...config,
     filename: sourceFile,
     isModule: true,
+    sourceMaps: true,
   });
 
   await Fs.mkdir(Path.dirname(destinationFile), { recursive: true });
