@@ -7,7 +7,9 @@
   "types": "build/index.d.ts",
   "files": [
     "build",
-    "src/index.ts"
+    "src/index.ts",
+    "src/defer.ts",
+    "src/generatorify.ts"
   ],
   "module": "build/index.js",
   "sideEffects": false,
