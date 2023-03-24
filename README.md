@@ -31,7 +31,7 @@ console.log(result.status); // resolved or rejected
 #### Convert events to asyncGenerator
 ```typescript
 import { once } from 'node:events';
-import { defer, Task } from 'asygen';
+import { generatorify, Task } from 'asygen';
 
 // send data from the event until process exit
 const task: Task = async (send) => {

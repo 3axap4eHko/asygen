@@ -55,7 +55,7 @@ const cjsConfig = {
     strict: true,
   },
   jsc: {
-    target: 'es5',
+    target: 'es2022',
     parser: {
       syntax: 'typescript',
     },
@@ -98,13 +98,17 @@ const compile = async (sourceFile, destinationFile, config) => {
 }
 
 (async () => {
-  const sourceFiles = await glob('**/*.ts', { ignore: '**/__tests__/**/*.ts', cwd: 'src' });
+  const sourceFiles = await glob('**/*.ts', { ignore: ['__tests__', '__mocks__'], cwd: 'src' });
   for (const filename of sourceFiles) {
     const sourceFile = `src/${filename}`;
     const destinationFileCjs = `build/${Path.basename(filename, '.ts')}.cjs`;
     const destinationFileMjs = `build/${Path.basename(filename, '.ts')}.js`;
-    await compile(sourceFile, destinationFileCjs, cjsConfig);
-    await compile(sourceFile, destinationFileMjs, mjsConfig);
+    await compile(sourceFile, destinationFileCjs, cjsConfig).catch(() => {
+      console.error(`Error compiling ${filename} to CommonJS`)
+    });
+    await compile(sourceFile, destinationFileMjs, mjsConfig).catch(() => {
+      console.error(`Error compiling ${filename} to CommonJS`)
+    });
   }
 })().catch(e => console.error(e));
 
