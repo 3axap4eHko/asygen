@@ -811,10 +811,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.15.6":
+"@types/node@*":
   version "18.15.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.15.6.tgz"
   integrity sha512-YErOafCZpK4g+Rp3Q/PBgZNAsWKGunQTm9FA3/Pbcm0VCriTEzcrutQ/SxSc0rytAp0NoFWue669jmKhEtd0sA==
+
+"@types/node@^18.15.10":
+  version "18.15.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.10.tgz#4ee2171c3306a185d1208dad5f44dae3dee4cfe3"
+  integrity sha512-9avDaQJczATcXgfmMAW3MIWArOO7A+m90vuCFLr8AotWf8igO/mRoYukrk2cqZVtv38tHs33retzHEilM7FpeQ==
 
 "@types/prettier@^2.1.5":
   version "2.7.2"
@@ -1598,10 +1603,10 @@ inherits@2, inherits@^2.0.3:
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-inop@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/inop/-/inop-0.0.6.tgz"
-  integrity sha512-OT8ULskRTSkZ8JNsWVQrlU1zFpdwv19UIkf1izMlMXZRfIXJK8PYRtHjY1pgkgJfiLCe+2ZSHziKt2EwEMgFJg==
+inop@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/inop/-/inop-0.0.8.tgz#ab21f5c78ac456bac5d7c8d87d5681e3eff28c65"
+  integrity sha512-y23ANvsx6xcmSAZ8DGG2l+SV9Z3inDk+NHk2Ep/hGqeAmTvkKu7Ql/SqCoOiStUm2FTjBiusTI/5X45pQu5nAw==
   dependencies:
     "@swc/cli" "^0.1.62"
     "@swc/core" "^1.3.42"
