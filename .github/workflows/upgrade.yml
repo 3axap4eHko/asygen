@@ -60,16 +60,15 @@ jobs:
           git commit -am "autoupdate"
           npm version patch
 
-      - name: Publish
-        if: steps.updates.outputs.PENDING != steps.updates.outputs.DONE
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-          npm publish
-          git push
-          git push --tags
-
       - name: Push updates
         if: steps.updates.outputs.PENDING != steps.updates.outputs.DONE
         run: |
           git push
           git push --tags
+
+      - name: Publish
+        if: steps.updates.outputs.PENDING != steps.updates.outputs.DONE
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm publish
+
