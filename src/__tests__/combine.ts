@@ -1,6 +1,7 @@
 import { combine } from '../index';
 
-const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout));
+const sleep = (timeout: number) =>
+  new Promise((resolve) => setTimeout(resolve, timeout));
 
 async function* generate(timeout: number, count: number) {
   for (let index = 0; index < count; index++) {

@@ -1,4 +1,4 @@
-import { defer, Deferred } from './defer';
+import { defer, Deferred } from './defer.js';
 
 export const createPoll = <T>() => {
   const dPoll: Deferred<T>[] = [defer<T>()];
@@ -19,7 +19,7 @@ export const createPoll = <T>() => {
     },
     done(value: T) {
       dPoll[dPoll.length - 1].resolve(value);
-      return Promise.all(dPoll.map(d => d.promise));
-    }
+      return Promise.all(dPoll.map((d) => d.promise));
+    },
   };
-}
+};

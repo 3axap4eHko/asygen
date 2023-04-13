@@ -4,14 +4,14 @@ export enum Status {
   REJECTED = 'rejected',
 }
 
-const counter: [number, number] = [0,0];
+const counter: [number, number] = [0, 0];
 export const getId = () => {
   const result = Date.now() * 100;
   if (counter[0] !== result) {
     counter[0] = result;
     counter[1] = 0;
-  };
-  return (counter[0] + (counter[1]++)).toString(16);
+  }
+  return (counter[0] + counter[1]++).toString(16);
 };
 
 export class Deferred<T = void, E = unknown> {
@@ -62,4 +62,4 @@ export class Deferred<T = void, E = unknown> {
 
 export const defer = <T = void, E = unknown>() => {
   return new Deferred<T, E>();
-}
+};

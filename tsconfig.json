@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "esnext",
+    "module": "ESNext",
+    "declaration": true,
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
     "rootDir": "src",
     "outDir": "build"
   },
-  "include": [
-    "src/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "__tests__",
-    "__fixtures__",
-    "__mocks__"
-  ]
+  "include": ["src/*.ts"],
+  "exclude": ["node_modules", "__tests__", "__fixtures__", "__mocks__"]
 }
