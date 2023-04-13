@@ -44,6 +44,27 @@ for await (const data of generatorify(task)) {
 }
 ```
 
+#### Combine generators
+```typescript
+import { combine } from 'asygen';
+
+const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout));
+
+async function* generate(timeout: number, count: number) {
+  for (let index = 0; index < count; index++) {
+    yield index;
+    await sleep(timeout);
+  }
+}
+
+for await (const data of combine(generate(100, 5), generate(500, 2))) {
+  // handle data
+}
+// First:    0 1 2 3 4 -
+// Second:   0 . . . . 1
+// Combined: 0 0 1 2 3 4 1
+```
+
 ## License
 
 License [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)
