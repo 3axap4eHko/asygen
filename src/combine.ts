@@ -1,21 +1,21 @@
-import { createPoll } from './deferredPoll.js';
+import { createQueue } from './queue.js';
 
 export const combine = <T, R = unknown>(...iterables: AsyncIterable<T>[]) => {
-  const poll = createPoll<IteratorResult<T, R>>();
+  const queue = createQueue<IteratorResult<T, R>>();
 
   Promise.all(
     iterables.map(async (iterable) => {
       for await (const value of iterable) {
-        await poll.push({ value, done: false }).promise;
+        await queue.push({ value, done: false }).promise;
       }
     })
-  ).then(async () => poll.done({ value: null, done: true }));
+  ).then(async () => queue.done({ value: null, done: true }));
 
   return {
     [Symbol.asyncIterator]() {
       return {
         next() {
-          return poll.pull().promise;
+          return queue.pull().promise;
         },
       };
     },

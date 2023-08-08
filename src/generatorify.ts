@@ -1,4 +1,4 @@
-import { createPoll } from './deferredPoll.js';
+import { createQueue } from './queue.js';
 
 export interface TaskCallback<T> {
   (value: T): Promise<void>;
@@ -9,19 +9,19 @@ export interface Task<T, R = unknown> {
 }
 
 export const generatorify = <T, R>(task: Task<T, R>): AsyncIterable<T> => {
-  const poll = createPoll<IteratorResult<T, R>>();
+  const queue = createQueue<IteratorResult<T, R>>();
 
   Promise.resolve(
     task(async (value) => {
-      await poll.push({ value, done: false }).promise;
+      await queue.push({ value, done: false }).promise;
     })
-  ).then(async (value) => poll.done({ value, done: true }));
+  ).then(async (value) => queue.done({ value, done: true }));
 
   return {
     [Symbol.asyncIterator]() {
       return {
         next() {
-          return poll.pull().promise;
+          return queue.pull().promise;
         },
       };
     },

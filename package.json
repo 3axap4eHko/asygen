@@ -14,7 +14,7 @@
     "build",
     "src/combine.ts",
     "src/defer.ts",
-    "src/deferredPoll.ts",
+    "src/queue.ts",
     "src/generatorify.ts",
     "src/index.ts"
   ],
@@ -42,6 +42,7 @@
     "defer",
     "deferred",
     "generator",
+    "generatorify",
     "asyncgenerator",
     "iterate",
     "promise",
@@ -49,7 +50,9 @@
     "await",
     "yield",
     "flow",
-    "control"
+    "control",
+    "queue",
+    "task"
   ],
   "license": "Apache-2.0",
   "bugs": {
