@@ -24,7 +24,7 @@ describe('createQueue test suite', () => {
     const queue = createQueue();
     const result = queue.pull();
     await expect(Promise.race([wait(1, value), result.promise])).resolves.toBe(
-      value
+      value,
     );
     expect(result).toBeInstanceOf(Deferred);
     expect(result.status).toBe(Status.PENDING);

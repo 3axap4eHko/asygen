@@ -14,7 +14,7 @@ export const generatorify = <T, R>(task: Task<T, R>): AsyncIterable<T> => {
   Promise.resolve(
     task(async (value) => {
       await queue.push({ value, done: false }).promise;
-    })
+    }),
   ).then(async (value) => queue.done({ value, done: true }));
 
   return {

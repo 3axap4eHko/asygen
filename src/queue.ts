@@ -1,4 +1,4 @@
-import { defer, Deferred, Status } from './defer.js';
+import { defer, Deferred } from './defer.js';
 
 export const createQueue = <T, E = Error>() => {
   const pendingQueue: Deferred<T, E>[] = [];
@@ -42,8 +42,8 @@ export const createQueue = <T, E = Error>() => {
       push(value);
       return Promise.all(
         [...pendingQueue, ...resolvedQueue, ...requestQueue].map(
-          (d) => d.promise
-        )
+          (d) => d.promise,
+        ),
       );
     },
     get size() {

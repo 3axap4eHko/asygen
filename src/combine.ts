@@ -8,7 +8,7 @@ export const combine = <T, R = unknown>(...iterables: AsyncIterable<T>[]) => {
       for await (const value of iterable) {
         await queue.push({ value, done: false }).promise;
       }
-    })
+    }),
   ).then(async () => queue.done({ value: null, done: true }));
 
   return {
