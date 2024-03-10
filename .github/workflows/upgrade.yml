@@ -20,5 +20,5 @@ jobs:
           npm_token: ${{ secrets.NPM_TOKEN }}
           codecov_token: ${{ secrets.CODECOV_TOKEN }}
           test: |
-            pnpm lint
             pnpm test
+            pnpm test:build
