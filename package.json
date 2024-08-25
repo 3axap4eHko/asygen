@@ -60,7 +60,7 @@
   },
   "homepage": "https://github.com/3axap4eHko/asygen#readme",
   "devDependencies": {
-    "@swc/core": "^1.7.14",
+    "@swc/core": "^1.7.18",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.16.1",
