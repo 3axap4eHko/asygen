@@ -59,7 +59,7 @@
     "url": "https://github.com/3axap4eHko/asygen/issues"
   },
   "homepage": "https://github.com/3axap4eHko/asygen#readme",
-  "packageManager": "pnpm@9.14.0",
+  "packageManager": "pnpm@9.14.2",
   "devDependencies": {
     "@swc/core": "^1.9.2",
     "@swc/jest": "^0.2.37",
