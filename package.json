@@ -61,8 +61,8 @@
   "homepage": "https://github.com/3axap4eHko/asygen#readme",
   "packageManager": "pnpm@9.15.9",
   "devDependencies": {
-    "@swc/core": "^1.11.21",
-    "@swc/jest": "^0.2.37",
+    "@swc/core": "^1.11.22",
+    "@swc/jest": "^0.2.38",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
