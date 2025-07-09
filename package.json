@@ -61,10 +61,10 @@
   "homepage": "https://github.com/3axap4eHko/asygen#readme",
   "packageManager": "pnpm@9.15.9",
   "devDependencies": {
-    "@swc/core": "^1.12.9",
+    "@swc/core": "^1.12.11",
     "@swc/jest": "^0.2.38",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.16.0",
+    "@types/node": "^22.16.2",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "eslint": "^9.30.1",
