@@ -61,7 +61,7 @@
   "homepage": "https://github.com/3axap4eHko/asygen#readme",
   "packageManager": "pnpm@9.15.9",
   "devDependencies": {
-    "@swc/core": "^1.15.0",
+    "@swc/core": "^1.15.1",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.19.0",
@@ -72,7 +72,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
-    "inop": "^0.7.36",
+    "inop": "^0.7.37",
     "jest": "^29.7.0",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
